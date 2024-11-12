@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar E-mail - EcoBalance</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .hero {
+            background-color: rgba(0, 100, 0, 0.8);
+            color: white;
+            padding: 20px 0;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-body {
+            width: 100%;
+            text-align: center;
+        }
+
+        .hero .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            font-weight: 300;
+            color: white;
+        }
+
+        .container {
+            flex-grow: 1;
+            max-width: 800px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            font-weight: bold;
+        }
+
+        .button.is-primary {
+            background-color: #006400;
+            border: none;
+        }
+
+        .button.is-primary:hover {
+            background-color: #004d00;
+        }
+
+        .notification.is-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .notification.is-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .footer {
+            background-color: #006400;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body th:style="'background-image: url(' + @{/images/fundo.jpg} + ');'">
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">EcoBalance</h1>
+            <h2 class="subtitle">Monitoramento de Consumo e Produção de Energia</h2>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="section">
+        <h1 class="title is-4">Enviar E-mail para Empresa</h1>
+
+        <form th:action="@{/admin/enviar-email}" method="post">
+            <div class="field">
+                <label class="label">Destinatário</label>
+                <div class="control">
+                    <input class="input" type="email" name="destinatario" required placeholder="Digite o e-mail do destinatário">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Assunto</label>
+                <div class="control">
+                    <input class="input" type="text" name="assunto" required placeholder="Digite o assunto do e-mail">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Corpo do E-mail</label>
+                <div class="control">
+                    <textarea class="textarea" name="corpo" required placeholder="Digite o corpo do e-mail"></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Enviar E-mail</button>
+                </div>
+            </div>
+        </form>
+
+        <div th:if="${mensagem}" class="notification is-success">
+            <button class="delete"></button>
+            <p th:text="${mensagem}"></p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>© 2024 EcoBalance - Todos os direitos reservados</p>
+    </div>
+</footer>
+</body>
+</html>

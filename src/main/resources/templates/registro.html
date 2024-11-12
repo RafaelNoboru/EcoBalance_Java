@@ -3,101 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Empresa</title>
+    <title>Cadastro - EcoBalance</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
-            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
             font-family: 'Arial', sans-serif;
-        }
-        .hero {
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .hero {
+            background-color: rgba(0, 100, 0, 0.8);
+            color: white;
+            padding: 20px 0;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-body {
+            width: 100%;
+            text-align: center;
+        }
+
+        .hero .title {
+            font-size: 1.8rem;
+            font-weight: bold;
             color: white;
         }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            font-weight: 300;
+            color: white;
+        }
+
         .input {
-            background-color: rgba(255, 255, 255, 0.8);
-            border: none;
+            background-color: rgba(255, 255, 255, 0.85);
+            border: 2px solid #A9D18E;
             border-radius: 5px;
         }
+
         .input:focus {
-            border-color: #00d1b2;
-            box-shadow: 0 0 0 1px rgba(0, 209, 178, 0.5);
+            border-color: #006400;
+            box-shadow: 0 0 0 1px rgba(0, 100, 0, 0.6);
         }
+
         .button.is-link {
-            background-color: #00d1b2;
+            background-color: #006400;
             border: none;
         }
+
         .button.is-link:hover {
-            background-color: #00b59a;
+            background-color: #004d00;
         }
+
         .notification {
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 5px;
         }
+
+        .has-text-link {
+            color: #006400;
+        }
+
+        .has-text-link:hover {
+            color: #004d00;
+        }
+
         .field p {
             color: black;
         }
+
+        .button.is-info {
+            background-color: #00d1b2;
+            color: white;
+        }
+
+        .button.is-info:hover {
+            background-color: #00b59a;
+        }
+
+        .footer {
+            background-color: #006400;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .hero-body .container {
+            max-width: 500px;
+        }
     </style>
 </head>
-<body>
-<section class="hero is-fullheight">
+<body th:style="'background-image: url(' + @{/images/fundo.jpg} + ');'">
+<section class="hero">
     <div class="hero-body">
         <div class="container has-text-centered">
             <h1 class="title has-text-weight-bold">Cadastro de Empresa</h1>
-            <form th:action="@{/register}" method="post">
-                <div class="field">
-                    <label class="label">Nome da Empresa</label>
-                    <div class="control">
-                        <input class="input" type="text" name="nome" required placeholder="Digite o nome da empresa">
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">E-mail</label>
-                    <div class="control">
-                        <input class="input" type="email" name="email" required placeholder="Digite o e-mail da empresa">
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Telefone</label>
-                    <div class="control">
-                        <input class="input" type="text" name="telefone" required placeholder="Digite o telefone da empresa">
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">CNPJ</label>
-                    <div class="control">
-                        <input class="input" type="text" name="cnpj" required placeholder="Digite o CNPJ da empresa">
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Usuário</label>
-                    <div class="control">
-                        <input class="input" type="text" name="username" required placeholder="Digite seu usuário">
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Senha</label>
-                    <div class="control">
-                        <input class="input" type="password" name="senha" required placeholder="Digite a senha da empresa">
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-link is-fullwidth">Cadastrar</button>
-                    </div>
-                </div>
-                <div th:if="${param.error}" class="notification is-danger">
-                    Erro no cadastro. Verifique os dados inseridos.
-                </div>
-            </form>
-            <div class="field">
-                <p>Já tem uma conta?</p>
-                <a href="/login" class="button is-info">Fazer login</a>
-            </div>
+            <h2 class="subtitle">Preencha as informações abaixo para criar sua conta</h2>
         </div>
     </div>
 </section>
+
+<section class="section">
+    <div class="container">
+        <form th:action="@{/empresa/registrar}" method="post">
+            <div class="field">
+                <label class="label">Nome da Empresa</label>
+                <div class="control">
+                    <input class="input" type="text" name="nome" required placeholder="Digite o nome da empresa">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">E-mail</label>
+                <div class="control">
+                    <input class="input" type="email" name="email" required placeholder="Digite o e-mail da empresa">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Telefone</label>
+                <div class="control">
+                    <input class="input" type="text" name="telefone" required placeholder="Digite o telefone da empresa">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">CNPJ</label>
+                <div class="control">
+                    <input class="input" type="text" name="cnpj" required placeholder="Digite o CNPJ da empresa">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Senha</label>
+                <div class="control">
+                    <input class="input" type="password" name="senha" required placeholder="Digite a senha da empresa">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link is-fullwidth">Cadastrar</button>
+                </div>
+            </div>
+            <div th:if="${param.error}" class="notification is-danger">
+                Erro no cadastro. Verifique os dados inseridos.
+            </div>
+        </form>
+        <div class="field">
+            <p>Já tem uma conta?</p>
+            <a href="/login" class="button is-info">Fazer login</a>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>© 2024 EcoBalance - Todos os direitos reservados</p>
+    </div>
+</footer>
 </body>
 </html>
