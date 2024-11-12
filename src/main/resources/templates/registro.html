@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Empresa</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+            font-family: 'Arial', sans-serif;
+        }
+        .hero {
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        .input {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 5px;
+        }
+        .input:focus {
+            border-color: #00d1b2;
+            box-shadow: 0 0 0 1px rgba(0, 209, 178, 0.5);
+        }
+        .button.is-link {
+            background-color: #00d1b2;
+            border: none;
+        }
+        .button.is-link:hover {
+            background-color: #00b59a;
+        }
+        .notification {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+        .field p {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title has-text-weight-bold">Cadastro de Empresa</h1>
+            <form th:action="@{/register}" method="post">
+                <div class="field">
+                    <label class="label">Nome da Empresa</label>
+                    <div class="control">
+                        <input class="input" type="text" name="nome" required placeholder="Digite o nome da empresa">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">E-mail</label>
+                    <div class="control">
+                        <input class="input" type="email" name="email" required placeholder="Digite o e-mail da empresa">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Telefone</label>
+                    <div class="control">
+                        <input class="input" type="text" name="telefone" required placeholder="Digite o telefone da empresa">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">CNPJ</label>
+                    <div class="control">
+                        <input class="input" type="text" name="cnpj" required placeholder="Digite o CNPJ da empresa">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Usuário</label>
+                    <div class="control">
+                        <input class="input" type="text" name="username" required placeholder="Digite seu usuário">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Senha</label>
+                    <div class="control">
+                        <input class="input" type="password" name="senha" required placeholder="Digite a senha da empresa">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-link is-fullwidth">Cadastrar</button>
+                    </div>
+                </div>
+                <div th:if="${param.error}" class="notification is-danger">
+                    Erro no cadastro. Verifique os dados inseridos.
+                </div>
+            </form>
+            <div class="field">
+                <p>Já tem uma conta?</p>
+                <a href="/login" class="button is-info">Fazer login</a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
