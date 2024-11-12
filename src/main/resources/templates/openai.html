@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enviar E-mail - EcoBalance</title>
+    <title>Chat OpenAI - EcoBalance</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -41,12 +41,6 @@
             color: white;
         }
 
-        .hero .subtitle {
-            font-size: 1rem;
-            font-weight: 300;
-            color: white;
-        }
-
         .container {
             flex-grow: 1;
             max-width: 800px;
@@ -61,31 +55,21 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .field {
-            margin-bottom: 20px;
-        }
-
-        .field label {
-            font-weight: bold;
-        }
-
-        .button.is-primary {
+        .button.is-link {
             background-color: #006400;
             border: none;
+            margin-bottom: 10px;
         }
 
-        .button.is-primary:hover {
+        .button.is-link:hover {
             background-color: #004d00;
         }
 
-        .notification.is-success {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .notification.is-danger {
-            background-color: #dc3545;
-            color: white;
+        .box {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
         }
 
         .footer {
@@ -98,57 +82,40 @@
     </style>
 </head>
 <body th:style="'background-image: url(' + @{/images/fundo.jpg} + ');'">
+
 <section class="hero">
     <div class="hero-body">
         <div class="container">
             <h1 class="title">EcoBalance</h1>
-            <h2 class="subtitle">Monitoramento de Consumo e Produção de Energia</h2>
         </div>
     </div>
 </section>
 
 <div class="container">
-    <div class="section">
-        <h1 class="title is-4">Enviar E-mail para Empresa</h1>
+    <section class="section">
+        <h1 class="title is-4">Chat com OpenAI</h1>
         <div class="buttons">
             <a class="button is-link" th:href="@{/dashboard}">Voltar para Dashboard</a>
         </div>
-        <form th:action="@{/admin/enviar-email}" method="post">
+        <form th:action="@{/openai}" method="get">
             <div class="field">
-                <label class="label">Destinatário</label>
+                <label class="label">Digite sua mensagem:</label>
                 <div class="control">
-                    <input class="input" type="email" name="destinatario" required
-                           placeholder="Digite o e-mail do destinatário">
+                    <input class="input" type="text" name="prompt" placeholder="Digite algo..." required>
                 </div>
             </div>
-
-            <div class="field">
-                <label class="label">Assunto</label>
-                <div class="control">
-                    <input class="input" type="text" name="assunto" required placeholder="Digite o assunto do e-mail">
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Corpo do E-mail</label>
-                <div class="control">
-                    <textarea class="textarea" name="corpo" required placeholder="Digite o corpo do e-mail"></textarea>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <button class="button is-primary" type="submit">Enviar E-mail</button>
-                </div>
+            <div class="control">
+                <button class="button is-primary" type="submit">Enviar</button>
             </div>
         </form>
 
-        <div th:if="${mensagem}" class="notification is-success">
-            <button class="delete"></button>
-            <p th:text="${mensagem}"></p>
+        <div class="box">
+            <h2 class="subtitle">Resposta da OpenAI:</h2>
+            <p th:text="${response}">A resposta aparecerá aqui...</p>
         </div>
-    </div>
+    </section>
 </div>
+
 <footer class="footer">
     <div class="content has-text-centered">
         <p>© 2024 EcoBalance - Todos os direitos reservados</p>

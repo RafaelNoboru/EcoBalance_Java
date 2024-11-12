@@ -47,6 +47,12 @@
             color: white;
         }
 
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
         .container {
             flex-grow: 1;
             max-width: 800px;
@@ -120,6 +126,10 @@
             </h2>
         </div>
     </div>
+    <a class="button is-light is-small logout-button" th:href="@{/logout}">
+        <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+        <span>Logout</span>
+    </a>
 </section>
 <div class="container">
     <div class="section">
@@ -143,19 +153,23 @@
                 <p>Valor de Produção: <span th:text="${producao}">0</span> kWh</p>
             </div>
         </div>
-        <div th:if="${consumo <= producao}" class="notification is-success" style="margin-top: 20px; text-align: center;">
+        <div th:if="${consumo <= producao}" class="notification is-success"
+             style="margin-top: 20px; text-align: center;">
             <p><strong>Tudo certo!</strong> A produção está equilibrada com o consumo.</p>
         </div>
 
         <div th:if="${consumo > producao}" class="notification is-danger" style="margin-top: 20px; text-align: center;">
-            <p><strong>Atenção!</strong> O consumo está maior que a produção. Considere reduzir o consumo ou aumentar a produção.</p>
+            <p><strong>Atenção!</strong> O consumo está maior que a produção. Considere reduzir o consumo ou aumentar a
+                produção.</p>
         </div>
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <button class="button is-primary is-light" onclick="window.location.href='/admin/email'">
                 Enviar Email
             </button>
         </div>
-    </div>
+        <div>
+            <a href="/openai" class="button is-info">Chat com OpenAI para recomendação</a>
+        </div>
     </div>
 </div>
 
