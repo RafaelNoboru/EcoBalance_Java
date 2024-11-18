@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - EcoBalance</title>
+    <title>Histórico - EcoBalance</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             color: #333;
-            height: 100vh;
+            height: 105vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -55,7 +55,7 @@
 
         .container {
             flex-grow: 1;
-            max-width: 800px;
+            max-width: 1000px;
             margin-top: 20px;
             margin-bottom: 20px;
         }
@@ -67,32 +67,17 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .card {
+        .table {
+            width: 100%;
+            margin-top: 20px;
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
-            padding: 20px;
         }
 
-        .card-header {
-            background-color: #006400;
-            color: white;
-        }
-
-        .card-content {
-            font-size: 1.2rem;
-        }
-
-        .card-footer {
-            background-color: #f0f0f0;
-        }
-
-        .button.is-link {
-            background-color: #006400;
-            border: none;
-        }
-
-        .button.is-link:hover {
-            background-color: #004d00;
+        .table th, .table td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
         }
 
         .footer {
@@ -102,16 +87,6 @@
             text-align: center;
             margin-top: auto;
         }
-
-        .card-header-title {
-            font-size: 1.25rem;
-            color: white;
-        }
-
-        .card-content p {
-            font-size: 1.25rem;
-            font-weight: 500;
-        }
     </style>
 </head>
 <body th:style="'background-image: url(' + @{/images/fundo.jpg} + ');'">
@@ -119,10 +94,10 @@
     <div class="hero-body">
         <div class="container">
             <h1 class="title">
-                EcoBalance
+                Histórico de Energia
             </h1>
             <h2 class="subtitle">
-                Monitoramento de Consumo e Produção de Energia
+                Produção e Consumo
             </h2>
         </div>
     </div>
@@ -133,46 +108,37 @@
 </section>
 <div class="container">
     <div class="section">
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">
-                    Consumo de Energia
-                </p>
-            </header>
-            <div class="card-content">
-                <p>Valor de Consumo: <span th:text="${consumo}">0</span> kWh</p>
-            </div>
+        <div th:if="${not #lists.isEmpty(producoes) or not #lists.isEmpty(consumos)}">
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                <tr>
+                    <th>Data e Hora</th>
+                    <th>Tipo</th>
+                    <th>Valor (kWh)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="producao : ${producoes}">
+                    <td th:text="${#temporals.format(producao.data, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>Produção</td>
+                    <td th:text="${producao.valor}"></td>
+                </tr>
+                <tr th:each="consumo : ${consumos}">
+                    <td th:text="${#temporals.format(consumo.data, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>Consumo</td>
+                    <td th:text="${consumo.valor}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="card" style="margin-top: 20px;">
-            <header class="card-header">
-                <p class="card-header-title">
-                    Produção de Energia
-                </p>
-            </header>
-            <div class="card-content">
-                <p>Valor de Produção: <span th:text="${producao}">0</span> kWh</p>
-            </div>
+        <div th:if="${#lists.isEmpty(producoes) and #lists.isEmpty(consumos)}">
+            <p>Não há produções ou consumos registrados para esta empresa.</p>
         </div>
-        <div th:if="${consumo <= producao}" class="notification is-success"
-             style="margin-top: 20px; text-align: center;">
-            <p><strong>Tudo certo!</strong> A produção está equilibrada com o consumo.</p>
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="/dashboard" class="button is-link">Voltar para o Dashboard</a>
         </div>
-
-        <div th:if="${consumo > producao}" class="notification is-danger" style="margin-top: 20px; text-align: center;">
-            <p><strong>Atenção!</strong> O consumo está maior que a produção. Considere reduzir o consumo ou aumentar a
-                produção.</p>
-        </div>
-        <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <button class="button is-primary is-light" onclick="window.location.href='/admin/email'">
-                Enviar Email
-            </button>
-        </div>
-        <div>
-            <a href="/openai" class="button is-info">Chat com OpenAI para recomendação</a>
-            <a th:href="@{/historico/{id}(id=${empresaId})}" class="button is-info">Ver Histórico</a>
-        </div>
+    </div>
 </div>
-
 <footer class="footer">
     <div class="content has-text-centered">
         <p>© 2024 EcoBalance - Todos os direitos reservados</p>
@@ -180,4 +146,3 @@
 </footer>
 </body>
 </html>
-

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpresaService {
@@ -22,5 +22,10 @@ public class EmpresaService {
 
     public Empresa getEmpresa(Long empresaId) {
         return empresaRepository.findById(empresaId).orElse(null);
+    }
+
+    public Long obterEmpresaIdPeloEmail(String email) {
+        Optional<Empresa> empresaOptional = empresaRepository.findByEmail(email);
+        return empresaOptional.map(Empresa::getId).orElse(null);
     }
 }
