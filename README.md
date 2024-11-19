@@ -24,8 +24,8 @@ API do projeto EcoBalance - Software para monitoramento de energia de painéis s
 - O usuário também pode consultar a OpenAI para um chat
 - O administrador da API poderá enviar emails para usuários contendo recomendações com relação ao seu consumo e produção de energia
 
--> Link do video pitch: https://youtu.be/HGnGGCAWsMQ
--> Link do video explicando: https://youtu.be/kGw506bi20A?si=D7KMnR-B1Mrqwczp
+- Link do video pitch: https://youtu.be/HGnGGCAWsMQ
+- Link do video explicando: https://youtu.be/kGw506bi20A?si=D7KMnR-B1Mrqwczp
 
 # Recursos da aplicação
 
